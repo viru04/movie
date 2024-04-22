@@ -50,48 +50,6 @@ pipeline {
             }
         }
 
-        // stage('SonarQube analysis') {
-        //     environment {
-        //         scannerHome = tool 'miniproject-sonar-scanner'
-        //     }
-
-        //     steps {
-        //         withSonarQubeEnv('miniproject-sonarqube-server') {
-        //             sh "${scannerHome}/bin/sonar-scanner"
-        //         }
-        //     }
-        // }
-        
-
-        // stage("Publish to Artifactory") {
-        //     steps {
-        //         script {
-        //             echo '<--------------- Movie Publish Started --------------->'
-
-        //             def server = Artifactory.newServer url: registry + "/artifactory", credentialsId: "artifact-cred"
-        //             def filePath = "/home/ubuntu/jenkins/workspace/test2_main/gohtmx"
-        //             def artifactLocation = "gohtmx"
-        //             def repositoryPath = "miniproject-go-local/"
-
-        //             def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"
-        //             def uploadSpec = """{
-        //                 "files": [
-        //                     {
-        //                         "pattern": "${filePath}",
-        //                         "target": "${repositoryPath}/${artifactLocation}",
-        //                         "props": "${properties}"
-        //                     }
-        //                 ]
-        //             }"""
-
-        //             def buildInfo = server.upload(uploadSpec)
-        //             server.publishBuildInfo(buildInfo)
-
-        //             echo '<--------------- GoLang Publish Ended --------------->'
-        //         }
-        //     }
-        // }
-
         stage('Give Docker Permissions'){
             steps {
                 script {
@@ -115,31 +73,15 @@ pipeline {
         stage('Docker Publish'){
             steps {
                 script {
-                    // echo '<---------Publishing Docker Image--------->'
-                    // docker.withRegistry(registry, 'artifact-cred') {
-                    //     app.push()
-                    // }
-                    // echo '<---------Docker Image Published--------->'
                     sh 'docker run -d -p 8080:80 movie'
                 }
             }
         }
 
-        // stage ('Delete Previous Deployment') {
-        //     steps {
-        //         script {
-        //             echo '<---------Deleting previous deployment--------->'
-        //             sh './delete-deploy.sh'
-        //             echo '<---------Previous deployment deleted--------->'
-        //         }
-        //     }
-        // }
-
         stage ('New Deploy') {
             steps {
                 script {
                     echo '<---------Deploying application--------->'
-                    // sh './deploy.sh'
                     echo '<---------Application deployed--------->'
                 }
             }
