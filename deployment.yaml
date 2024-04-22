@@ -20,4 +20,4 @@ spec:
         image: miniproject3.jfrog.io/miniproject3-docker-local/gohtmx:1.0.0
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 80
