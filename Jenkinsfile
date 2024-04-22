@@ -37,7 +37,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo '<---------Building code--------->'
-                sh 'docker build -t movie .'
+                sh 'ls -a'
                 echo '<---------Code built--------->'
             }
         }
@@ -45,7 +45,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo '<---------Testing code--------->'
-                sh 'docker run -d -p 8080:80 movie'
+                sh 'ls'
                 echo '<---------Code tested--------->'
             }
         }
@@ -106,7 +106,7 @@ pipeline {
             steps {
                 script {
                     echo '<---------Building Docker Image--------->'
-                    app = docker.build(imageName + ':' + version)
+                    sh 'docker build -t movie .'
                     echo '<---------Docker Image Built--------->'
                 }
             }
@@ -120,7 +120,7 @@ pipeline {
                     //     app.push()
                     // }
                     // echo '<---------Docker Image Published--------->'
-                    sh 'ls'
+                    sh 'docker run -d -p 8080:80 movie'
                 }
             }
         }
@@ -139,7 +139,7 @@ pipeline {
             steps {
                 script {
                     echo '<---------Deploying application--------->'
-                    sh './deploy.sh'
+                    // sh './deploy.sh'
                     echo '<---------Application deployed--------->'
                 }
             }
